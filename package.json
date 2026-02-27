@@ -1,11 +1,15 @@
 {
-  "name": "testing-autofix",
+  "name": "testing-autofixer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "test.js",
   "scripts": {
     "test": "node test.js"
   },
+  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2" // Added axios dependency
+  }
 }

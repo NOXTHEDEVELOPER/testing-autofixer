@@ -1,5 +1,2 @@
-function runTest() {
-  console.log("Running tests..."
-}
 
-runTest();
+console.log("Running tests.");

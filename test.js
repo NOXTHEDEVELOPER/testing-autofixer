@@ -1,44 +1,29 @@
 // test.js
+
+// BUG 1: Missing dependency. Node will crash immediately saying "Cannot find module 'axios'"
+const axios = require('axios');
 const fs = require('fs');
-const crypto = require('crypto');
 
-function initializeApp() {
-    console.log("Booting system...");
-    loadConfig();
-}
-
-function loadConfig() {
-    console.log("Loading configuration...");
-    setupDatabase();
-}
-
-function setupDatabase() {
-    console.log("Connecting to database...");
-    processDataPipeline();
-}
-
-function processDataPipeline() {
-    console.log("Initializing data pipeline...");
-    // Let's generate a bunch of noise in the console to fill up the logs
-    for(let i = 0; i < 50; i++) {
-        console.log(`[DATA STREAM ${i}] Processing chunk: ${crypto.randomBytes(64).toString('hex')}`);
-    }
+async function processData() {
+    console.log("Starting data processor...");
     
-    executeCoreLogic();
+    // Simulating database load
+    const userDB = [
+        { id: 1, name: "Alice", active: true },
+        { id: 2, name: "Bob", active: false }
+    ];
+
+    // BUG 2: ReferenceError. Tries to use 'userDatabase' instead of 'userDB'
+    const activeUsers = userDatabase.filter(u => u.active);
+    console.log(`Found ${activeUsers.length} active users.`);
+
+    // BUG 3: TypeError. Arrays don't have a .save() method in vanilla JS
+    activeUsers.save();
+    
+    console.log("Data processing complete.");
 }
 
-function executeCoreLogic() {
-    console.log("Executing Core Logic...");
-    
-    // The actual error: trying to require a package that isn't in package.json
-    // Node will throw an ERR_MODULE_NOT_FOUND with a long stack trace.
-    // The LLM should realize it needs to run `npm install axios` or remove the require.
-    const axios = require('axios'); 
-    
-    axios.get('https://api.github.com').then(res => {
-        console.log("Success");
-    });
-}
-
-// Start the app
-initializeApp();
+processData().catch(err => {
+    console.error("Fatal exception during processData:");
+    throw err;
+});

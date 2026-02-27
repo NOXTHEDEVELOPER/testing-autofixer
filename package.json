@@ -1,11 +1,7 @@
 {
-  "name": "testing-autofix",
+  "name": "your-project-name",
   "version": "1.0.0",
-  "description": "",
+  "description": "Your project description",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
-  },
-  "author": "",
-  "license": "ISC"
-}
+    "test": "echo \

@@ -1,0 +1,37 @@
+name: Node.js+CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+        # The 'cache: npm' option was removed because the dependencies lock file (e.g., package-lock.json)
+        # was not found in the repository, which caused the 'setup-node' action to fail.
+        # It is highly recommended to commit your 'package-lock.json' or 'yarn.lock' file
+        # to your repository to enable dependency caching and ensure reproducible builds.
+        always-auth: false
+        check-latest: false
+
+    - name: Install dependencies
+      # Use 'npm install' to install project dependencies. This will also generate a 'package-lock.json'
+      # file if one doesn't already exist. Consider committing this lock file for reproducible builds.
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    # Add other steps like testing, linting, etc. if applicable
+    # - name: Run tests
+    #   run: npm test
